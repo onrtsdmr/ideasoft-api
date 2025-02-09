@@ -26,12 +26,8 @@ class Order extends Model
         return $this->belongsTo(Customer::class, 'customerId');
     }
 
-    public function calculateTotal()
+    public function products()
     {
-        $total = 0;
-        foreach ($this->items as $item) {
-            $total += $item['total'];
-        }
-        return $total;
+        return $this->hasMany(Product::class, 'id', 'productId')->whereIn('id', collect($this->items)->pluck('productId'));
     }
 }

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\DiscountController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -20,3 +21,4 @@ Route::get('/products', [ProductController::class, 'index']);
 Route::get('/orders', [OrderController::class, 'index']);
 Route::post('/orders', [OrderController::class, 'store']);
 Route::delete('/orders/{id}', [OrderController::class, 'destroy']);
+Route::get('/orders/{orderId}/discounts', [DiscountController::class, 'calculateDiscount']);
