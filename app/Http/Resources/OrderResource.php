@@ -17,7 +17,7 @@ class OrderResource extends JsonResource
         return [
             'id' => $this->id,
             'customerId' => $this->customerId,
-            'items' => json_decode($this->items),
+            'items' => json_decode($this->items, true),
             'total' => $this->total,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

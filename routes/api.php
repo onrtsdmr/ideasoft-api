@@ -10,8 +10,13 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
+// Customers
 Route::get('/customers', [CustomerController::class, 'index']);
 
+// Products
 Route::get('/products', [ProductController::class, 'index']);
 
+// Orders
 Route::get('/orders', [OrderController::class, 'index']);
+Route::post('/orders', [OrderController::class, 'store']);
+Route::delete('/orders/{id}', [OrderController::class, 'destroy']);
