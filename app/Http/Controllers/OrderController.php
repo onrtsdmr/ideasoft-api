@@ -18,12 +18,21 @@ class OrderController extends Controller
         if (empty($orders)) {
             $orders = Order::all();
             foreach ($orders as $order) {
+                $order['items'] = json_decode($order['items'], true);
                 Redis::rpush('orders', json_encode($order));
             }
         } else {
             $orders = array_map(function ($order) {
-                $orderData = json_decode($order, true);
-                $orderData['items'] = json_decode($orderData['items'], true);
+                if (is_array($order)) {
+                    $orderData = $order;
+                } else {
+                    $orderData = json_decode($order, true);
+                }
+            
+                if (isset($orderData['items']) && is_string($orderData['items'])) {
+                    $orderData['items'] = json_decode($orderData['items'], true);
+                }
+            
                 return $orderData;
             }, $orders);
         }
